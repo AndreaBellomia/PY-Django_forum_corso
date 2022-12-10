@@ -1,0 +1,9 @@
+<!-- /forum_app/templates_forum_app/form_risposta.html -->
+{% load crispy_forms_tags %}
+
+<form action="{% url 'rispondi_discussione' pk=discussione.pk %}" class="mb-3" method="POST">
+    {% csrf_token %}
+    {{ form_risposta|crispy }}
+    <button type="submit" class="btn btn-primary custom-btn-primary text-dark"><i class="bi bi-plus-circle icon-custon-plus"></i></button>
+
+</form>

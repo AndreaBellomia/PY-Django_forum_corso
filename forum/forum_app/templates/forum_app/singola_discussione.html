@@ -1,0 +1,47 @@
+<!-- /forum_app/templates_forum_app/singola_discussione.html -->
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}{{ discussione.titolo }}{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <h2>Sezione: {{ discussione.sezione_appartenenza }}</h2>
+        <hr>
+        <h3>{{ discussione.titolo }}</h3>
+        <p>{{ discussione.data_creazione }}</p>
+
+    </div>
+    
+    {% for post in posts_discussione %}
+        <div class="container mt-3">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row">
+
+                        <div class="col text-left">
+                            <div class="card-header">
+                                <h4>{{ post.autore_post }}</h4>
+                                <p>{{ post.data_creazione }}</p>
+                            </div>
+                            <div class="container pt-2">
+                                <p>{{post.contenuto}}</p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+    <div class="container">
+        {% include './form_risposta.html' %}
+    </div>
+    
+
+{% endblock %}

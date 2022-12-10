@@ -1,0 +1,41 @@
+<!-- core/templates/core/singola_sezione.html -->
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}Homepage{% endblock %}
+
+
+{% block content %}
+
+    {% for sezione in lista_sezioni %}
+        <div class="container mt-3">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row">
+
+                        {% if sezione.logo_sezione %}
+                            <img class="card-img p-0 custom" src="{{ sezione.logo_sezione.url }}" alt="Card image cap" style="width: 400px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-left: 12px !important;" >
+                        {% else %}
+                            <!-- <i class="bi bi-file-earmark-image text-center" style="width: 410px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; font-size: 8rem;"></i> -->
+                            <img src="" alt="" style="width: 410px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; font-size: 8rem;">
+                        {% endif %}
+        
+                        <div class="col text-left" style="padding-left: 0px;">
+                            <div class="card-header">
+                                <a href="{{ sezione.get_absolute_url }}"><h3 class="">{{sezione.nome_sezione}}</h3></a>
+                            </div>
+                            <div class="container">
+                                <p>{{sezione.descrizione}}</p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+        
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,26 @@
+<!-- registration/login.hmtl -->
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}Login{% endblock %}
+
+
+{% block content %}
+
+<div class="container-sm text-center" style="max-width: 50% !important;" >
+    <div class="justify-contant-center" >
+        <h2 class="mt-5 mb-4">Login al Forum</h2>
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <p><a href="{% url 'password_reset' %}">password dimenticata</a></p>
+            <input type="submit" class="btn btn-primary custom-btn-primary text-dark" value="Login">
+            <input type="hidden" name="next" value="{{ next }}">
+        </form>
+       
+        
+    </div>
+</div>
+
+{% endblock %}

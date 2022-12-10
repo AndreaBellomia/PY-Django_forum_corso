@@ -1,0 +1,74 @@
+<!-- /forum_app/templates_forum_app/singola_sezione.html -->
+{% extends '../base.html' %}
+{% load static %}
+
+{% block title %}{{sezione.nome_sezione}}{% endblock %}
+
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/forum_app/sezione.css' %}">
+{% endblock %}
+
+
+
+    
+
+
+{% block content %}
+
+
+<div class="custom-container-head">
+    <div class="container">
+    <h2 class="">{{sezione.nome_sezione}}</h2>
+    <p></p>
+    <p class="">{{sezione.descrizione}}</p>
+    </div>
+
+    
+</div>
+
+
+
+<div class="container">
+    {% for discussione in discussioni %}
+        <a href="{{ discussione.get_absolute_url }}" style="text-decoration: none; color: black;">
+        <div class="custom-container-discussione">
+            
+            <div class="col text-left" >
+                <div class="card-header pb-0">
+                    <h3 class="">{{discussione}}</h3>
+                </div>
+             </div>
+             <hr>
+             <div class="row">
+                <div class="col-3" ></a> 
+                    <p><strong class="custom-timesago"> Autore: </strong><a class="custom-user-link" href="{% url 'user_profile_view' username=user.username %}">@{{ discussione.autore }}</a></p>
+                </div>
+                <div class="col-3" >
+                    <a href="{{ discussione.get_absolute_url }}" style="text-decoration: none; color: black;">
+                    <p class="custom-timesago">{{ discussione.get_day_ago }}</p></a>
+                </div></a>
+                <div class="col-auto ms-auto">
+                    <a href="{{ discussione.get_absolute_url }}" style="text-decoration: none; color: black;"></a>
+                    <p class="custom-timesago"><i class="bi bi-chat-square"></i></p>
+                    </a>
+                </div>
+                </a>
+
+             </div>
+             
+            
+        </div>   
+            
+        
+
+    {% endfor %}
+    
+</div>
+
+
+
+    
+</div>
+
+{% endblock %}

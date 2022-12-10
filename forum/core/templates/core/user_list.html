@@ -1,0 +1,21 @@
+<!-- core/templates/core/user_list.html -->
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}Lista Utenti{% endblock %}
+
+
+{% block content %}
+
+    <h2>Lista Utenti</h2>
+    <hr>
+  
+        {% for user in object_list %}
+            
+            <p><a href="{% url 'user_profile_view' username=user.username %}" class="text"><strong>@{{ user.username }}</strong></a></p>
+
+        {% endfor %}
+
+
+{% endblock %}

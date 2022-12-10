@@ -1,0 +1,17 @@
+<!-- core/templates/core/user_profile.html -->
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}{{ user }}{% endblock %}
+
+
+{% block content %}
+    {% if request.user == user %}
+        <h1>Il tuo profilo utente</h1>
+        <h2>{{ user }}</h2>
+    {% else %}
+        <h1>User: {{ user }}</h1>
+    {% endif %}
+
+{% endblock %}
