@@ -1,21 +1,52 @@
 <!-- core/templates/core/user_list.html -->
 {% extends '../base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 
 {% block title %}Lista Utenti{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/core/user_list.css' %}">
+{% endblock %}
+
 
 {% block content %}
 
-    <h2>Lista Utenti</h2>
-    <hr>
-  
+    
+        <div class="container">
+        
+        <div class="custom-nav-container-title">
+            <h2 class="align-middle text-center">Lista Utenti</h2>
+        </div>
+
+        
         {% for user in object_list %}
-            
-            <p><a href="{% url 'user_profile_view' username=user.username %}" class="text"><strong>@{{ user.username }}</strong></a></p>
+            {% if forloop.first %}<div class="row">{% endif %}
+                <div class="col">
+                    <div class="card mb-3">
+                        <a href="{% url 'user_profile_view' username=user.username %}" class="text text-dark" style="text-decoration: none;">
+                            <div class="card-header">
+                                <strong>@{{ user.username }}</strong>
+                            </div>
+                        </a>
+                        <div class="body">
+                            <div class="container">
+                                <p class=""><i class="bi bi-calendar2-check align-start"></i> <strong class="align-middle">Inscrizione: </strong><span class="align-middle">{{ user.date_joined|date:"d M Y" }}</span></p>
+                                <p class=""><i class="bi bi-chat-left align-start"></i> <strong class="align-middle">Commenti: </strong><span class="align-middle">{{ user.posts.count }}</span></p>
+                                <p class=""><i class="bi bi-collection align-start"></i> <strong class="align-middle">Discussioni: </strong><span class="align-middle">{{ user.discussioni.count }}</span></p>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                    
+                </div>
+            {% if forloop.counter|divisibleby:"3"  or forloop.last%}</div>{% endif %}
+            {% if forloop.counter|divisibleby:"3"  and not forloop.last%}<div class="row">{% endif %}
 
         {% endfor %}
+        </div>
 
 
 {% endblock %}

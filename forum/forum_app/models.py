@@ -79,7 +79,7 @@ class Post(models.Model):
     autore_post = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     contenuto = models.TextField()
     data_creazione = models.DateTimeField(auto_now_add=True)
-    discussione = models.ForeignKey(Discussione, on_delete=models.CASCADE)
+    discussione = models.ForeignKey(Discussione, on_delete=models.CASCADE, related_name='posts_discussione')
 
     def __str__(self):
         return self.autore_post.username

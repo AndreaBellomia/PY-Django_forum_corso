@@ -1,17 +1,64 @@
 <!-- core/templates/core/user_profile.html -->
 {% extends '../base.html' %}
 {% load crispy_forms_tags %}
-
+{% load static %}
 
 {% block title %}{{ user }}{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/core/user_profile.css' %}">
+{% endblock %}
+
 
 
 {% block content %}
-    {% if request.user == user %}
+    <!-- {% if request.user == user %}
         <h1>Il tuo profilo utente</h1>
         <h2>{{ user }}</h2>
     {% else %}
         <h1>User: {{ user }}</h1>
-    {% endif %}
+    {% endif %} -->
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-4 custom-container-prfile-head">
+                <h2>{{ user.username }}</h2>
+                <p class=""><i class="bi bi-calendar2-check align-start"></i> <strong class="align-middle">Inscrizione: </strong><span class="align-middle">{{ user.date_joined|date:"d M Y" }}</span></p>
+                <p class=""><i class="bi bi-chat-left align-start"></i> <strong class="align-middle">Commenti: </strong><span class="align-middle">{{ user.posts.count }}</span></p>
+                <p class=""><i class="bi bi-collection align-start"></i> <strong class="align-middle">Discussioni: </strong><span class="align-middle">{{ user.discussioni.count }}</span></p>
+            </div>
+            <div class="col">
+                
+                <div class="col-8 custom-container-header">
+                    <h4 class="text-center">Discussioni</h4>
+                </div>
+
+                {% for discussione in discussioni_utente %}
+                    
+                    <div class="custom-container-discussione">
+                        <a href="{{ discussione.get_absolute_url }}" style="text-decoration: none;">
+                            <div class="col text-left" >
+                                <div class="card-header pb-0">
+                                    <h5 class="">{{ discussione.titolo }}</h5>
+                                </div>
+                            </div>
+                        </a>
+                         <hr>
+                         <div class="row">
+                            <div class="col-auto" >
+                                <p><strong class="custom-timesago"> Sezione: <a href="{{ discussione.sezione_appartenenza.get_absolute_url }}" style="text-decoration: none;"></strong>{{ discussione.sezione_appartenenza }}</a></p>
+                            </div>
+                            </a>
+            
+                         </div>
+                         
+                        
+                    </div> 
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+
 
 {% endblock %}
