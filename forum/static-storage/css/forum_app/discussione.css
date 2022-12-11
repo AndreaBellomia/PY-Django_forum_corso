@@ -1,0 +1,36 @@
+.custom-nav-container {
+    background-color: rgb(255, 255, 255);
+    margin-top: 20px;
+    
+    padding: 10px;
+    padding-bottom: 1px;
+    padding-top: 13px;
+    border-radius: 8px;
+}
+
+.custom-nav-container-commento{
+    background-color: rgb(255, 255, 255);
+    margin-top: 20px;
+    
+    padding: 10px;
+    padding-bottom: 10px;
+    border-radius: 8px;
+}
+
+.custom-date{
+    font-size: 100%;
+    margin: 2px;
+    color: rgb(133, 133, 133);
+}
+
+.custom-accordion-head{
+    border-radius: 4px !important;
+}
+
+.custom-text{
+    color: #fdd037 !important;;
+}
+
+.custom-header-card{
+    background-color: #363636;
+}

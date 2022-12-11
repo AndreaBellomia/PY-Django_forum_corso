@@ -40,5 +40,5 @@ class PostModelForm(forms.ModelForm):
         }
 
         labels = {
-            "contenuto" : "Commenta"
+            "contenuto" : ""
         }

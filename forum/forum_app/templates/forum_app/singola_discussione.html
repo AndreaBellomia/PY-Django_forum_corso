@@ -1,19 +1,37 @@
 <!-- /forum_app/templates_forum_app/singola_discussione.html -->
 {% extends '../base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 
 {% block title %}{{ discussione.titolo }}{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/forum_app/discussione.css' %}">
+{% endblock %}
+
+
 
 {% block content %}
-    <div class="container">
-        <h2>Sezione: {{ discussione.sezione_appartenenza }}</h2>
-        <hr>
-        <h3>{{ discussione.titolo }}</h3>
-        <p>{{ discussione.data_creazione }}</p>
 
+    <div class="container custom-nav-container ">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb ">
+                <li class="breadcrumb-item" ><a href="/" style="text-decoration: none;">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page"><a href="{% url 'visualizza_sezione' pk=discussione.sezione_appartenenza.pk %}" style="text-decoration: none;">{{ discussione.sezione_appartenenza }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ discussione.titolo }}</li>
+                </ol>
+            </nav>
     </div>
+
+
+
+    <div class="container custom-nav-container-commento">
+        {% include './form_risposta.html' %}
+    </div>
+
+    
+
     
     {% for post in posts_discussione %}
         <div class="container mt-3">
@@ -22,13 +40,56 @@
                     <div class="row">
 
                         <div class="col text-left">
-                            <div class="card-header">
-                                <h4>{{ post.autore_post }}</h4>
-                                <p>{{ post.data_creazione }}</p>
-                            </div>
-                            <div class="container pt-2">
-                                <p>{{post.contenuto}}</p>
-                            </div>
+                            {% if forloop.first %}
+                                <div class="card-header pb-0">
+                                    <h2>{{ discussione.titolo }}</h2>
+                                    <div class="row">           
+                                        <div class="col">
+                                            <h5><a href="{% url 'user_profile_view' username=post.autore_post.username %}" style="text-decoration: none;">{{ post.autore_post }}</a></h5>
+                                            <div class="row pb-1">
+                                                <div class="col-auto">
+                                                    <p class=""><i class="bi bi-calendar2-check align-start"></i> <span class="align-middle">{{ post.autore_post.date_joined|date:"d M Y" }}</span></p>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p class=""><i class="bi bi-chat-left align-start"></i> <span class="align-middle">{{ post.autore_post.posts.count }}</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col text-end align-bottom">
+                                            <br>
+                                            <br>
+                                            <span class="align-bottom text-muted">{{ post.data_creazione|date:"D d M Y" }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container pt-2">
+                                    <p>{{post.contenuto}}</p>
+                                </div>
+
+                            {% else %}
+                                <div class="card-header pb-0">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5><a href="{% url 'user_profile_view' username=post.autore_post.username %}" style="text-decoration: none;">{{ post.autore_post }}</a></h5>
+                                            <div class="row pb-1">
+                                                <div class="col-auto">
+                                                    <p class=""><i class="bi bi-calendar2-check align-start"></i> <span class="align-middle">{{ post.autore_post.date_joined|date:"d M Y" }}</span></p>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p class=""><i class="bi bi-chat-left align-start"></i> <span class="align-middle">{{ post.autore_post.posts.count }}</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col text-end">
+                                            <p class="text-muted">{{ post.data_creazione|date:"D d M Y" }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container pt-2">
+                                    <p>{{post.contenuto|linebreaks }}</p>
+                                </div>
+                                
+                            {% endif %}
                             
                         </div>
                     </div>
@@ -39,9 +100,7 @@
 
     {% endfor %}
 
-    <div class="container">
-        {% include './form_risposta.html' %}
-    </div>
+    
     
 
 {% endblock %}
