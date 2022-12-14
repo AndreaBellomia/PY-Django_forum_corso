@@ -1,41 +1,78 @@
 <!-- core/templates/core/singola_sezione.html -->
 {% extends '../base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 
 {% block title %}Homepage{% endblock %}
 
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/core/homepage.css' %}">
+{% endblock %}
+
+
+
 {% block content %}
 
-    {% for sezione in lista_sezioni %}
-        <div class="container mt-3">
-            <div class="card">
-                <div class="card-body p-0">
-                    <div class="row">
+    {% if request.user.is_staff %}
 
-                        {% if sezione.logo_sezione %}
-                            <img class="card-img p-0 custom" src="{{ sezione.logo_sezione.url }}" alt="Card image cap" style="width: 400px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-left: 12px !important;" >
-                        {% else %}
-                            <!-- <i class="bi bi-file-earmark-image text-center" style="width: 410px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; font-size: 8rem;"></i> -->
-                            <img src="" alt="" style="width: 410px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; font-size: 8rem;">
-                        {% endif %}
-        
-                        <div class="col text-left" style="padding-left: 0px;">
-                            <div class="card-header">
+    
+    <div class="container pt-3 text-center">
+        <div class="row">
+            <div class="col-6 offset-3">
+                <div class="row">
+                    <a class="btn btn-primary custom-btn-primary text-dark " href="{% url 'creazione_sezione' %}">Crea Nuova Sezione</a>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    {% endif %}
+
+    <div class="container">
+
+    
+        {% for sezione in lista_sezioni %}
+
+
+            {% if sezione.logo_sezione %}
+                <div class="custom-container-discussione">
+                    
+                        <div class="row">
+                            <div class="col-auto">
+                                <a href="{{ sezione.get_absolute_url }}"><img class="img-style" src="{{ sezione.logo_sezione.url }}" alt="Card image cap" style="width: 400px; border-top-right-radius: 0px; border-bottom-right-radius: 0px;" ></a>
+                                    <!-- <i class="bi bi-file-earmark-image text-center" style="width: 410px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; font-size: 8rem;"></i> -->
+                                    <img src="" alt="" style="width: 410px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; font-size: 8rem;">     
+                            </div>
+                            <div class="col text-left pt-1">
                                 <a href="{{ sezione.get_absolute_url }}"><h3 class="">{{sezione.nome_sezione}}</h3></a>
+                                <hr>
+                                <div class="container">
+                                    <p>{{sezione.descrizione}}</p>
+                                </div>
                             </div>
-                            <div class="container">
-                                <p>{{sezione.descrizione}}</p>
-                            </div>
-                            
+                        </div>
+                </div>
+            {% else %}
+            <div class="custom-container-discussione-noimg">
+                <div class="row">
+                    <div class="col text-left pt-1">
+                        <a href="{{ sezione.get_absolute_url }}"><h3 class="">{{sezione.nome_sezione}}</h3></a>
+                        <hr>
+                        <div class="container">
+                            <p>{{sezione.descrizione}}</p>
                         </div>
                     </div>
                 </div>
             </div>
-        
-        </div>
-        
-    {% endfor %}
-
+            {% endif %}
+            
+            
+        {% endfor %}
+    </div>
 {% endblock %}
